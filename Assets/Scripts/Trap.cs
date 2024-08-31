@@ -1,18 +1,120 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer), typeof(Animator), typeof(AudioSource))]
 public class Trap : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public string tomatoTag = "Player";
+    public string areaTag = "Respawn";
+    public bool isDrag = true;
+    
+    protected static readonly LayerMask TomatoLayer = 1 << 6;
+
+    protected bool IsTriggered;
+    private bool _isDragging;
+    private bool _isRed;
+    private readonly Color _normalColor = Color.white;
+    private readonly Color _dragColor = Color.gray;
+    private Vector3 _startPosition;
+    private Vector3 _lastPosition;
+    private Vector3 _screenPoint;
+    private Vector3 _offset;
+
+    protected AudioSource Audio;
+    protected Animator Anim;
+    private SpriteRenderer _sr;
+
+    private void Awake()
     {
-        
+        Audio = GetComponent<AudioSource>();
+        Anim = GetComponent<Animator>();
+        _sr = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        _startPosition = transform.position;
+    }
+
+    public void Reset()
+    {
+        transform.position = _startPosition;
+
+        gameObject.SetActive(true);
+        IsTriggered = false;
+        _isDragging = false;
+        isDrag = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        _isRed = other.CompareTag("Respawn");
+        if (other.CompareTag("Player")) Activate(other);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Respawn")) _isRed = false;
+    }
+
+    protected virtual void Activate(Collider2D other)
+    {
+        IsTriggered = true;
+    }
+
+    private void OnMouseOver()
+    {
+        _sr.color = _isDragging || IsTriggered ? _normalColor : _dragColor;
+        if (IsTriggered)
+        {
+            Cursor.SetCursor(Resources.Load<Texture2D>("Sprites/tile_0137"), new Vector2(4, 0), CursorMode.Auto);
+            return;
+        }
+
+        Cursor.SetCursor(
+            _isDragging
+                ? Resources.Load<Texture2D>("Sprites/tile_0139")
+                : Resources.Load<Texture2D>("Sprites/tile_0138"), new Vector2(4, 0), CursorMode.Auto);
+    }
+
+    private void OnMouseExit()
+    {
+        Cursor.SetCursor(Resources.Load<Texture2D>("Sprites/tile_0137"), new Vector2(4, 0), CursorMode.Auto);
+        _sr.color = _normalColor;
+    }
+
+    private void OnMouseDown()
+    {
+        if (IsTriggered) return;
+
+        _isDragging = true;
+        Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/drop_004"));
+
+        _lastPosition = transform.position;
+
+        _offset = gameObject.transform.position -
+                  Camera.main.ScreenToWorldPoint(
+                      new Vector3(Input.mousePosition.x, Input.mousePosition.y, _screenPoint.z));
+    }
+
+    private void OnMouseDrag()
+    {
+        Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _screenPoint.z);
+        Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + _offset;
+        transform.position = curPosition;
+    }
+
+    private void OnMouseUp()
+    {
+        _isDragging = false;
+
+        if (_isRed)
+        {
+            Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/error_006"));
+            transform.position = _lastPosition;
+            return;
+        }
+
+        Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/drop_001"));
     }
 }
