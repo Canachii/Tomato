@@ -7,7 +7,7 @@ public class Trap : MonoBehaviour
     public string tomatoTag = "Player";
     public string areaTag = "Respawn";
     public bool isDrag = true;
-    
+
     protected static readonly LayerMask TomatoLayer = 1 << 6;
 
     protected bool IsTriggered;
@@ -64,7 +64,10 @@ public class Trap : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (!isDrag) return;
+
         _sr.color = _isDragging || IsTriggered ? _normalColor : _dragColor;
+
         if (IsTriggered)
         {
             Cursor.SetCursor(Resources.Load<Texture2D>("Sprites/tile_0137"), new Vector2(4, 0), CursorMode.Auto);
@@ -79,12 +82,14 @@ public class Trap : MonoBehaviour
 
     private void OnMouseExit()
     {
-        Cursor.SetCursor(Resources.Load<Texture2D>("Sprites/tile_0137"), new Vector2(4, 0), CursorMode.Auto);
+        if (_isDragging)
+            Cursor.SetCursor(Resources.Load<Texture2D>("Sprites/tile_0137"), new Vector2(4, 0), CursorMode.Auto);
         _sr.color = _normalColor;
     }
 
     private void OnMouseDown()
     {
+        if (!isDrag) return;
         if (IsTriggered) return;
 
         _isDragging = true;
@@ -99,6 +104,9 @@ public class Trap : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        if (!isDrag) return;
+        if (IsTriggered) return;
+
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _screenPoint.z);
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + _offset;
         transform.position = curPosition;
@@ -106,6 +114,9 @@ public class Trap : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (!isDrag) return;
+        if (IsTriggered) return;
+
         _isDragging = false;
 
         if (_isRed)
