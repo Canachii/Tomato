@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -3008879249828299126, guid: 5f67602c85a27a847aed4d15b8e0339e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -262,4 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8888fbc7a04146da86e239207b6ce9e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tomatoTag: Player
+  areaTag: Respawn
   isDrag: 1
+  force: 10

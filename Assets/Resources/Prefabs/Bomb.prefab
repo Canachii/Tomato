@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 27b0e68c1fc22cf439164a31a8848c15, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,7 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b116f9aa893540ef84e2bd7a1b82a97b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tomatoTag: Player
+  areaTag: Respawn
   isDrag: 1
+  force: 10
   radius: 3
 --- !u!58 &1418042340021136754
 CircleCollider2D:
