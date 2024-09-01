@@ -49,7 +49,7 @@ public class Trap : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         _isRed = other.CompareTag("Respawn");
-        if (other.CompareTag("Player")) Activate(other);
+        if (other.CompareTag("Player") && !isDrag) Activate(other);
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -68,12 +68,6 @@ public class Trap : MonoBehaviour
 
         _sr.color = _isDragging || IsTriggered ? _normalColor : _dragColor;
 
-        if (IsTriggered)
-        {
-            Cursor.SetCursor(Resources.Load<Texture2D>("Sprites/tile_0137"), new Vector2(4, 0), CursorMode.Auto);
-            return;
-        }
-
         Cursor.SetCursor(
             _isDragging
                 ? Resources.Load<Texture2D>("Sprites/tile_0139")
@@ -82,8 +76,8 @@ public class Trap : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (_isDragging)
-            Cursor.SetCursor(Resources.Load<Texture2D>("Sprites/tile_0137"), new Vector2(4, 0), CursorMode.Auto);
+        Cursor.SetCursor(Resources.Load<Texture2D>("Sprites/tile_0137"), new Vector2(4, 0), CursorMode.Auto);
+
         _sr.color = _normalColor;
     }
 
