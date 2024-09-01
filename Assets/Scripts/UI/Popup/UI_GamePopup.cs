@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_GamePopup : UI_Popup
 {
@@ -9,8 +10,9 @@ public class UI_GamePopup : UI_Popup
     [SerializeField]
     private GameObject[] deactivatedObjects;
     [SerializeField]
+    private Slider slider;
+    [SerializeField]
     private float clearTime;
-    private float runningTime = 0f;
     private bool isRunning;
 
     enum Buttons
@@ -18,12 +20,13 @@ public class UI_GamePopup : UI_Popup
         InstallationCompleteButton,
     }
 
+
     public void Update()
     {
         if (isRunning)
         {
-            runningTime += Time.deltaTime;
-            if (runningTime >= clearTime)
+            slider.value -= Time.deltaTime;
+            if (slider.value <= 0)
             {
                 Managers.Game.GameClear();
                 isRunning = false;
@@ -51,7 +54,9 @@ public class UI_GamePopup : UI_Popup
         {
             go.gameObject.SetActive(true);
         }
-        
+
+        slider.maxValue = clearTime;
+        slider.value = slider.maxValue;
 
         BindButton(typeof(Buttons));
 
