@@ -11,6 +11,7 @@ public class GameManager
     {
         Debug.Log("GameOver");
         GameEnd?.Invoke();
+        Managers.UI.CloseAllPopupUI();
         Managers.UI.ShowPopupUI<UI_GameOverPopup>();
     }
 
@@ -18,6 +19,7 @@ public class GameManager
     {
         Debug.Log("GameClear");
         GameEnd?.Invoke();
+        Managers.UI.CloseAllPopupUI();
         Managers.UI.ShowPopupUI<UI_GameClearPopup>();
     }
 }
