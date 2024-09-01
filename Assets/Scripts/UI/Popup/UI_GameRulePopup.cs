@@ -31,7 +31,7 @@ public class UI_GameRulePopup : UI_Popup
 
         Managers.UI.ClosePopupUI(this);
 
-        //Managers.UI.ShowPopupUI<UI_LevelPopup>();
+        Managers.UI.ShowPopupUI<UI_GamePopup>();
 
     }
 }
