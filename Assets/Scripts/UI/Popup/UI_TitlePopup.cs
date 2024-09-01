@@ -29,7 +29,7 @@ public class UI_TitlePopup : UI_Popup
 
         Managers.UI.ClosePopupUI(this);
 
-        Managers.UI.ShowPopupUI<UI_GameRulePopup>();
+        Managers.UI.ShowPopupUI<UI_GamePopup>();
     }
 
 }
