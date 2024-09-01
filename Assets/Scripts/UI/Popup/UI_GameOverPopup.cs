@@ -31,6 +31,7 @@ public class UI_GameOverPopup : UI_Popup
 
         Managers.UI.ShowPopupUI<UI_GamePopup>();
 
+        Managers.Sound.Play(Define.Sound.Effect, "switch_004");
     }    
     
     void OnClickHomeButtonButton()
@@ -41,6 +42,7 @@ public class UI_GameOverPopup : UI_Popup
 
         Managers.UI.ShowPopupUI<UI_TitlePopup>();
 
+        Managers.Sound.Play(Define.Sound.Effect, "switch_004");
     }
 
 

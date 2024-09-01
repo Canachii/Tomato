@@ -7,7 +7,7 @@ public class Trap : MonoBehaviour
     public string tomatoTag = "Player";
     public string areaTag = "Respawn";
     public bool isDrag = true;
-    
+
     protected static readonly LayerMask TomatoLayer = 1 << 6;
 
     protected bool IsTriggered;
@@ -49,7 +49,7 @@ public class Trap : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         _isRed = other.CompareTag("Respawn");
-        if (other.CompareTag("Player")) Activate(other);
+        if (other.CompareTag("Player") && !isDrag) Activate(other);
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -64,12 +64,9 @@ public class Trap : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (!isDrag) return;
+
         _sr.color = _isDragging || IsTriggered ? _normalColor : _dragColor;
-        if (IsTriggered)
-        {
-            Cursor.SetCursor(Resources.Load<Texture2D>("Sprites/tile_0137"), new Vector2(4, 0), CursorMode.Auto);
-            return;
-        }
 
         Cursor.SetCursor(
             _isDragging
@@ -80,15 +77,17 @@ public class Trap : MonoBehaviour
     private void OnMouseExit()
     {
         Cursor.SetCursor(Resources.Load<Texture2D>("Sprites/tile_0137"), new Vector2(4, 0), CursorMode.Auto);
+
         _sr.color = _normalColor;
     }
 
     private void OnMouseDown()
     {
+        if (!isDrag) return;
         if (IsTriggered) return;
 
         _isDragging = true;
-        Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/drop_004"));
+        Audio.PlayOneShot(Resources.Load<AudioClip>("Sound/drop_004"));
 
         _lastPosition = transform.position;
 
@@ -99,6 +98,9 @@ public class Trap : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        if (!isDrag) return;
+        if (IsTriggered) return;
+
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _screenPoint.z);
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + _offset;
         transform.position = curPosition;
@@ -106,15 +108,18 @@ public class Trap : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (!isDrag) return;
+        if (IsTriggered) return;
+
         _isDragging = false;
 
         if (_isRed)
         {
-            Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/error_006"));
+            Audio.PlayOneShot(Resources.Load<AudioClip>("Sound/error_006"));
             transform.position = _lastPosition;
             return;
         }
 
-        Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/drop_001"));
+        Audio.PlayOneShot(Resources.Load<AudioClip>("Sound/drop_001"));
     }
 }

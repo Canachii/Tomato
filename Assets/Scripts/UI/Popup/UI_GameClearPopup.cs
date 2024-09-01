@@ -28,5 +28,7 @@ public class UI_GameClearPopup : UI_Popup
         Managers.UI.CloseAllPopupUI();
 
         Managers.UI.ShowPopupUI<UI_TitlePopup>();
+        
+        Managers.Sound.Play(Define.Sound.Effect, "switch_004");
     }
 }

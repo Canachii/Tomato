@@ -6,7 +6,7 @@ public class Spring : Trap
     
     protected override void Activate(Collider2D other)
     {
-        Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/jump"));
+        Audio.PlayOneShot(Resources.Load<AudioClip>("Sound/jump"));
         
         Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.right * rb.velocity.x;

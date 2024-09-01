@@ -13,7 +13,7 @@ public class Bomb : Trap
     {
         if (IsTriggered) return;
 
-        Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/explosion"));
+        Audio.PlayOneShot(Resources.Load<AudioClip>("Sound/explosion"));
         Anim.SetBool(Use, true);
 
         int n = Physics2D.OverlapCircleNonAlloc(transform.position, radius, _targets, TomatoLayer);
