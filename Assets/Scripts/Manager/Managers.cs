@@ -37,7 +37,6 @@ public class Managers : MonoBehaviour
             Instance = Utils.GetOrAddComponent<Managers>(go);
             DontDestroyOnLoad(go);
 
-            gameManager.Init();
             soundManager.Init();
 
             Application.targetFrameRate = 60;
