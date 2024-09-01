@@ -6,6 +6,12 @@ using UnityEngine;
 public class GameManager
 {
     public event Action GameEnd;
+    
+    public void Init()
+    {
+        Managers.Sound.Clear();
+        Managers.Sound.Play(Define.Sound.Bgm, "Peacetown Forest_63 BPM");
+    }
 
     public void GameOver()
     {

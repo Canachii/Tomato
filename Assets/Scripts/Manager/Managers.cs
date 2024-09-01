@@ -38,6 +38,7 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
 
             soundManager.Init();
+            gameManager.Init();
 
             Application.targetFrameRate = 60;
         }
