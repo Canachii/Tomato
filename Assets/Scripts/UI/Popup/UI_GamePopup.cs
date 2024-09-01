@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UI_GamePopup : UI_Popup
 {
+    private Trap[] _traps;
     [SerializeField]
     private Rigidbody2D[] _rbs;
     [SerializeField]
@@ -52,6 +53,7 @@ public class UI_GamePopup : UI_Popup
             go.gameObject.SetActive(true);
         }
         
+        _traps = GetComponentsInChildren<Trap>();
 
         BindButton(typeof(Buttons));
 
@@ -73,6 +75,11 @@ public class UI_GamePopup : UI_Popup
         foreach (GameObject go in deactivatedObjects)
         {
             go.gameObject.SetActive(false);
+        }
+
+        foreach (Trap trap in _traps)
+        {
+            trap.isDrag = false;
         }
 
         isRunning = true;   
