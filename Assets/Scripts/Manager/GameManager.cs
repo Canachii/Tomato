@@ -13,6 +13,7 @@ public class GameManager
         GameEnd?.Invoke();
         Managers.UI.CloseAllPopupUI();
         Managers.UI.ShowPopupUI<UI_GameOverPopup>();
+        Managers.Sound.Play(Define.Sound.Effect, "question_001");
     }
 
     public void GameClear()
@@ -21,5 +22,6 @@ public class GameManager
         GameEnd?.Invoke();
         Managers.UI.CloseAllPopupUI();
         Managers.UI.ShowPopupUI<UI_GameClearPopup>();
+        Managers.Sound.Play(Define.Sound.Effect, "confirmation_002");
     }
 }

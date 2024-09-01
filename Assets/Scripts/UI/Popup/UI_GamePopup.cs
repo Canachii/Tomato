@@ -90,6 +90,7 @@ public class UI_GamePopup : UI_Popup
 
         isRunning = true;   
 
+        Managers.Sound.Play(Define.Sound.Effect, "switch_004");
     }
 
     public void GameEnd()

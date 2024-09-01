@@ -93,7 +93,7 @@ public class Trap : MonoBehaviour
         if (IsTriggered) return;
 
         _isDragging = true;
-        Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/drop_004"));
+        Audio.PlayOneShot(Resources.Load<AudioClip>("Sound/drop_004"));
 
         _lastPosition = transform.position;
 
@@ -121,11 +121,11 @@ public class Trap : MonoBehaviour
 
         if (_isRed)
         {
-            Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/error_006"));
+            Audio.PlayOneShot(Resources.Load<AudioClip>("Sound/error_006"));
             transform.position = _lastPosition;
             return;
         }
 
-        Audio.PlayOneShot(Resources.Load<AudioClip>("Audio/drop_001"));
+        Audio.PlayOneShot(Resources.Load<AudioClip>("Sound/drop_001"));
     }
 }
